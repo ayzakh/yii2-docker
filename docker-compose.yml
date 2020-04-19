@@ -16,6 +16,7 @@ services:
       - PG_DB
       - PG_PWD
       - NETWORK_PG
+      - YII_ENV
     volumes:
       - ./tests:/tests:delegated
       # Framework testing
