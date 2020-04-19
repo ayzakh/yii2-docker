@@ -13,6 +13,9 @@ services:
       - GITHUB_API_TOKEN=${GITHUB_API_TOKEN}
       - PHP_ENABLE_XDEBUG
       - TEST_RUNTIME_PATH=/tmp/runtime
+      - PG_DB
+      - PG_PWD
+      - NETWORK_PG
     volumes:
       - ./tests:/tests:delegated
       # Framework testing
@@ -21,3 +24,30 @@ services:
       - ./_host-volumes/app:/app:delegated
       # Composer cache
       - ~/.composer-docker/cache:/root/.composer/cache:delegated
+    networks:
+      myappnet:
+        ipv4_address: ${NETWORK_APP}
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${PG_PWD}
+      POSTGRES_DB: ${PG_DB}
+    networks:
+      myappnet:
+        ipv4_address: ${NETWORK_PG}
+  adminer:
+    image: adminer
+    restart: always
+    # ports:
+    #   - 8080:8080
+    networks:
+      myappnet:
+        ipv4_address: ${NETWORK_ADMINER}
+
+networks:
+  myappnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${NETWORK_SUBNET}
