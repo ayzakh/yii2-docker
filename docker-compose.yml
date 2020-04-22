@@ -28,6 +28,8 @@ services:
     networks:
       myappnet:
         ipv4_address: ${NETWORK_APP}
+    ports:
+      - 80:80
   db:
     image: postgres
     restart: always
@@ -40,8 +42,8 @@ services:
   adminer:
     image: adminer
     restart: always
-    # ports:
-    #   - 8080:8080
+    ports:
+      - 8080:8080
     networks:
       myappnet:
         ipv4_address: ${NETWORK_ADMINER}

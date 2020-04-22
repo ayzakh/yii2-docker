@@ -1,5 +1,6 @@
 .env
 *.swp
-_host-volumes/yii2
+_host-volumes
 
 \.idea/
+\.vscode/
